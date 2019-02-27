@@ -222,5 +222,50 @@ router.post('/updateticket',mid.requiresLogin,function (req,res,next) {
 
 })
 
+router.post('/updatetask',mid.requiresLogin,function (req,res,next) {
+    title = req.body.title
+    description = req.body.description
+
+
+
+    assignee = req.body.assignee
+
+    priority = req.body.priority
+
+    console.log(priority)
+
+    status = req.body.status
+
+
+
+
+    tasks.singletask(req.body.ticketid,function (response) {
+
+        response.title = title;
+        response.description = description
+        response.priority = priority;
+        response.assignee = assignee;
+        response.status = status;
+
+        // save the user
+        response.save(function(err,ticket) {
+            if (err) {
+
+                res.end('{"response": "error"}')
+            }
+            else {
+                res.end('{"response": "success"}')
+            }
+
+        });
+
+    })
+
+
+
+
+
+})
+
 
 module.exports = router;
