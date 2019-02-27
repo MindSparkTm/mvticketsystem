@@ -84,7 +84,7 @@
 
         <div id="status" style="font-family:SansSerif;font-size: 20px;color:#0e8eab"/>
         </div>
-        <button type="button" id="update_btn" class="btn btn-primary" style="background-color:#17a2b8">Update</button>
+        <button type="button" id="update_btn_task" class="btn btn-primary" style="background-color:#17a2b8">Update</button>
         </br>
 
     </form>
@@ -159,6 +159,47 @@
 
             error: function (error) {
               alert('Update failed. Please contact surajit')
+            }
+        });
+
+    })
+
+    $('#update_btn_task').click(function (e) {
+        e.preventDefault()
+
+        taskid = $('#ticketid').val()
+
+
+        title = $('#title').val()
+        description = $('#description').val()
+        assignee = $('#assignee').val()
+        priority = $('#priority').val()
+        status = $('#status').val()
+
+        postData = JSON.stringify({
+            'taskid': taskid,
+            'title': title,
+            'description': description,
+            'assignee': assignee,
+            'priority': priority,
+            'status': status
+        })
+
+        $.ajax({
+            type: 'POST',
+            url: "/tickettype/updatetask",
+            data: postData,
+            dataType: "json",
+            contentType: "application/json",
+            success: function (resultData) {
+
+                alert('Update Successful')
+                location.reload();
+
+            },
+
+            error: function (error) {
+                alert('Update failed. Please contact surajit')
             }
         });
 
