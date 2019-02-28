@@ -1,5 +1,7 @@
 var express = require('express');
 var tickets = require('../models/ticketmodel')
+var User = require('../models/usermodel')
+
 var tasks = require('../models/taskmodel')
 var cp = require('child_process');
 var sms_worker = cp.fork('./worker');
@@ -23,7 +25,6 @@ router.post('/create',mid.requiresLogin, function (req, res, next) {
     console.log('imageurls', req.body)
 
     var name =req.session.username
-    var email = req.session.email
 
 
 
@@ -67,17 +68,28 @@ router.post('/create',mid.requiresLogin, function (req, res, next) {
 
         } else {
             console.log(response)
-            console.log('namekk',name,email)
 
-            sms_worker.on('message', function(m) {
-                // Receive results from child process
-                console.log('received: ' + m);
+            User.singleuser(assignee,function (user,err) {
+                if (err){
+                    console.log(err)
+                }
+                else{
+
+                    email = user.email
+                    sms_worker.on('message', function(m) {
+                        // Receive results from child process
 
 
-            });
+                    });
 
-            var data = email+"|"+ticketid+"|"+name+"|"+"ticket"
-            sms_worker.send(data);
+                    var data = email+"|"+ticketid+"|"+name+"|"+"ticket"
+                    sms_worker.send(data);
+                }
+
+            })
+
+
+
             res.end('{"response": "Success"}')
         }
     });
@@ -98,6 +110,8 @@ router.post('/createtask',mid.requiresLogin, function (req, res, next) {
     createdby = req.body.createdby
 
     assignee = req.body.assignee
+
+
 
     priority = req.body.priority
 
@@ -126,15 +140,24 @@ router.post('/createtask',mid.requiresLogin, function (req, res, next) {
 
         } else {
             console.log(response)
-            sms_worker.on('message', function(m) {
-                // Receive results from child process
-                console.log('received: ' + m);
+            User.singleuser(assignee,function (user,err) {
+                if (err){
+                    console.log(err)
+                }
+                else{
+
+                    email = user.email
+                    sms_worker.on('message', function(m) {
+                        // Receive results from child process
 
 
-            });
+                    });
 
-            var data = email+"|"+taskid+"|"+name+"|"+"ticket"
-            sms_worker.send(data);
+                    var data = email+"|"+taskid+"|"+name+"|"+"task"
+                    sms_worker.send(data);
+                }
+
+            })
             res.end('{"response": "Success"}')
         }
     });

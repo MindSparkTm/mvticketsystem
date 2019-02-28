@@ -5,15 +5,15 @@ process.on('message', function(data) {
     console.log('data',data)
 
     var values = data.split('|');
+    var confirm_link =""
+    if (values[3]=='task'){
 
-    if (data[3]=='task'){
-
-        var confirm = 'http://23.23.62.117/tickettype/taskinfo?taskid='
+        confirm_link = "http://23.23.62.117/tickettype/taskinfo?taskid="
 
     }
 
-    if(data[3]=='ticket'){
-        var confirm = 'http://23.23.62.117/tickettype/details?ticketid='
+    if(values[3]=='ticket'){
+        confirm_link = "http://23.23.62.117/tickettype/details?ticketid="
 
     }
 
@@ -42,7 +42,7 @@ process.on('message', function(data) {
                     "Variables": {
                         "name": values[2],
                         "ticketid": values[1],
-                        "confirmation_link":confirm+values[1]
+                        "confirmation_link":confirm_link+values[1]
                     }
                 }
             ]

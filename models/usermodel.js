@@ -52,6 +52,31 @@ userSchema.statics.authenticate = function (email, password, callback) {
         });
 }
 
-var User = mongoose.model('Users', userSchema);
+
+
+
+userSchema.statics.singleuser = function (assignee,callback) {
+
+    User.findOne({'username': assignee},function (err, user) {
+        if (err) {
+            console.log(err)
+
+            return callback(err)
+        } else {
+
+            console.log(user)
+
+
+            return callback(user);
+
+
+        }
+
+    })
+
+}
+
+User = mongoose.model('Users', userSchema);
+
 module.exports = User;
 
