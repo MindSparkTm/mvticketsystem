@@ -86,6 +86,9 @@ router.post('/create',mid.requiresLogin, function (req, res, next) {
 
 router.post('/createtask',mid.requiresLogin, function (req, res, next) {
 
+    var name =req.session.username
+    var email = req.session.email
+
     taskid = uuid.v1();
 
     title = req.body.title
