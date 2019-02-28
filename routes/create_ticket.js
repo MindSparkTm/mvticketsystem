@@ -76,7 +76,7 @@ router.post('/create',mid.requiresLogin, function (req, res, next) {
 
             });
 
-            var data = email+"|"+ticketid+"|"+name
+            var data = email+"|"+ticketid+"|"+name+"|"+"ticket"
             sms_worker.send(data);
             res.end('{"response": "Success"}')
         }
@@ -123,6 +123,15 @@ router.post('/createtask',mid.requiresLogin, function (req, res, next) {
 
         } else {
             console.log(response)
+            sms_worker.on('message', function(m) {
+                // Receive results from child process
+                console.log('received: ' + m);
+
+
+            });
+
+            var data = email+"|"+taskid+"|"+name+"|"+"ticket"
+            sms_worker.send(data);
             res.end('{"response": "Success"}')
         }
     });

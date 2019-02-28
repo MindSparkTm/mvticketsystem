@@ -6,6 +6,17 @@ process.on('message', function(data) {
 
     var values = data.split('|');
 
+    if (data[3]=='task'){
+
+        var confirm = 'http://23.23.62.117/tickettype/taskinfo?taskid='
+
+    }
+
+    if(data[3]=='ticket'){
+        var confirm = 'http://23.23.62.117/tickettype/details?ticketid='
+
+    }
+
 
 
     const mailjet = require ('node-mailjet')
@@ -27,11 +38,11 @@ process.on('message', function(data) {
                     ],
                     "TemplateID": 712178,
                     "TemplateLanguage": true,
-                    "Subject": "New task added",
+                    "Subject": 'New'+values[3]+'added',
                     "Variables": {
                         "name": values[2],
                         "ticketid": values[1],
-                        "confirmation_link": "http://23.23.62.117/tickettype/details?ticketid="+values[1]
+                        "confirmation_link":confirm+values[1]
                     }
                 }
             ]
