@@ -23,6 +23,7 @@ router.post('/signup', function(req, res, next) {
             email: req.body.email,
             username: req.body.username,
             password: req.body.password,
+
         }
         //use schema.create to insert data into the db
         User.create(userData, function (err, user) {
@@ -46,6 +47,7 @@ router.post('/signup', function(req, res, next) {
             } else {
                 req.session.userId = user._id;
                 req.session.username = user.username
+                req.session.email = user.email
 
                 res.end('{"response": "success"}')
 

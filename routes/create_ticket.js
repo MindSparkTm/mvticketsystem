@@ -1,6 +1,8 @@
 var express = require('express');
 var tickets = require('../models/ticketmodel')
 var tasks = require('../models/taskmodel')
+var cp = require('child_process');
+var sms_worker = cp.fork('./worker');
 
 var uuid = require('uuid');
 var dateTime = require('node-datetime');
@@ -20,7 +22,13 @@ router.get('/', mid.requiresLogin,function (req, res, next) {
 router.post('/create',mid.requiresLogin, function (req, res, next) {
     console.log('imageurls', req.body)
 
-    ticketid = uuid.v1();
+    var name =req.session.username
+    var email = req.session.email
+
+
+
+
+    var ticketid = uuid.v1();
     tickettype = req.body.tickettype
 
     title = req.body.title
@@ -59,6 +67,17 @@ router.post('/create',mid.requiresLogin, function (req, res, next) {
 
         } else {
             console.log(response)
+            console.log('namekk',name,email)
+
+            sms_worker.on('message', function(m) {
+                // Receive results from child process
+                console.log('received: ' + m);
+
+
+            });
+
+            var data = email+"|"+ticketid+"|"+name
+            sms_worker.send(data);
             res.end('{"response": "Success"}')
         }
     });
