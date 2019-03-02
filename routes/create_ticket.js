@@ -381,7 +381,7 @@ router.get('/ticketcount',mid.requiresLogin,function (req,res) {
 })
 
 
-router.get('/taskcount',function (req,res) {
+router.get('/taskcount',mid.requiresLogin,function (req,res) {
 
     tasks.find_task_count(function (response) {
         console.log('response',response)
