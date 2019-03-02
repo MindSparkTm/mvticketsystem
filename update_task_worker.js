@@ -20,7 +20,7 @@ process.on('message', function(data) {
 
 
     const mailjet = require ('node-mailjet')
-        .connect('3f3529f71722a5d6ba3190402608e02b','9f3cd9f6154aca71fc9e7b484ff416e1')
+        .connect('','')
     const request = mailjet
         .post("send", {'version': 'v3.1'})
         .request({
