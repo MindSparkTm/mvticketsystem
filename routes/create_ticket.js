@@ -2,7 +2,7 @@ var express = require('express');
 var tickets = require('../models/ticketmodel')
 var User = require('../models/usermodel')
 
-var tasks = require('../models/taskmodel')
+var tasks = require('../models/tasksmodel')
 var cp = require('child_process');
 var sms_worker = cp.fork('./worker');
 var update_worker = cp.fork('./update_task_worker');
@@ -384,18 +384,14 @@ router.get('/ticketcount',mid.requiresLogin,function (req,res) {
 router.get('/taskcount',function (req,res) {
 
     tasks.find_task_count(function (response) {
-        console.log('respo',response["1"])
-
-        var name = response["1"]
-        d = name["1"]
-
-        console.log('d',d)
+        console.log('response',response)
 
 
-        names:  ['Evan','Surajit','Isis','Millie','Sharon','Phoebe','Angel','Serah'],
 
-            res.render('test.hbs', {'graph':'Tasks','summary':'Number of Assigned Tasks','topheading':'Task Summary','Evan':response['1'],'Surajit':
-            response['2'],'Isis':response['3'],'Millie':response['4'],'Sharon':response['5'],'Phoebe':response['6'],'Angel':response['7'],'Serah':response['8']})
+
+        names:  ['Evan','Surajit','Isis','Millie','Sharon','Phoebe','Angel','Serah']
+
+           res.render('test.hbs', {'graph':'Tasks','summary':'Number of Assigned Tasks','topheading':'Task Summary','resp':response})
 
     })
 
