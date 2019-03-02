@@ -110,6 +110,52 @@ exports.singleticket = function (ticketid,callback) {
 
 }
 
+exports.find_ticket_count = function(callback){
 
+         var names = ['Evan','Surajit','Isis','Millie','Sharon','Phoebe','Angel','Serah']
+
+         var ticketcount =[]
+
+         var resultsCount = 0;
+
+
+ for (var i=0;i<names.length;i++){
+     _tickets.find({'assignee': names[i]},function (err, tickets) {
+
+         resultsCount++
+
+         if (err) {
+             console.log(err)
+
+             return callback(err)
+         } else {
+
+             ticketcount.push(tickets.length)
+
+
+             if (resultsCount === names.length) {
+                 return callback(ticketcount);
+
+
+             }
+
+
+
+
+
+
+
+
+
+
+
+         }
+
+     })
+
+ }
+
+
+}
 exports.ticket =mongoose.model('tickets', ticketSchema)
 

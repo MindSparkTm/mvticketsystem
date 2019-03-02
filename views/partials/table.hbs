@@ -69,6 +69,10 @@
 </div>
 
 <script type="text/javascript">
+
+    $(document).ready(function() {
+        $('table.highchart').highchartTable();
+    });
     var $rows = $('#table tr');
     $('#search').keyup(function() {
         var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase();
