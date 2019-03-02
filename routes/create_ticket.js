@@ -369,6 +369,7 @@ router.post('/updatetask',mid.requiresLogin,function (req,res,next) {
 router.get('/ticketcount',mid.requiresLogin,function (req,res) {
 
     tickets.find_ticket_count(function (response) {
+        console.log('respo',response)
 
         names:  ['Evan','Surajit','Isis','Millie','Sharon','Phoebe','Angel','Serah'],
 
@@ -384,6 +385,8 @@ router.get('/ticketcount',mid.requiresLogin,function (req,res) {
 router.get('/taskcount',mid.requiresLogin,function (req,res) {
 
     tickets.find_ticket_count(function (response) {
+        console.log('respo',response)
+
 
         names:  ['Evan','Surajit','Isis','Millie','Sharon','Phoebe','Angel','Serah'],
 
