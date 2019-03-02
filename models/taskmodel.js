@@ -65,7 +65,6 @@ exports.find_task_count = function(callback) {
     var names = ['Evan', 'Surajit', 'Isis', 'Millie', 'Sharon', 'Phoebe', 'Angel', 'Serah']
 
     var taskcount = []
-
     var resultsCount = 0;
 
 
@@ -79,13 +78,17 @@ exports.find_task_count = function(callback) {
 
                 return callback(err)
             } else {
+                 taskcount.push({
+                     key: i,
+                     value:tickets.length
 
-                taskcount.push(tickets.length)
+                 })
 
 
                 if (resultsCount === names.length) {
+                    console.log('Taskkkkkkk',taskcount)
+
                     return callback(taskcount);
-                    taskcount=[]
 
 
                 }
@@ -96,7 +99,8 @@ exports.find_task_count = function(callback) {
         })
 
     }
+
 }
 
-exports.task =mongoose.model('tasks', taskSchema)
+exports.task =_tasks
 

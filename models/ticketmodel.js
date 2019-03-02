@@ -2,9 +2,8 @@ var mongoose = require('mongoose');
 
 var exports = module.exports = {};
 
-var ticketSchema = new mongoose.Schema({
-    ticketid:String,
-    tickettype: String,
+var taskSchema = new mongoose.Schema({
+    taskid:String,
     title:String,
     description:String,
     createdby:String,
@@ -15,93 +14,21 @@ var ticketSchema = new mongoose.Schema({
     time : { type : Date, default: Date.now }
 });
 
-     _tickets = mongoose.model('tickets', ticketSchema)
+_tasks = mongoose.model('tasks', taskSchema)
 
 
-     exports.ticketobject = function (tickettype,username,callback) {
+exports.taskobject = function (username,callback) {
 
-
-         if (tickettype == 'mytask') {
-
-             console.log('mytaskhas bee called',username)
-
-             // search by username
-             _tickets.find({'assignee': username,"tickettype":"task"},function (err, tickets) {
-                 if (err) {
-                     console.log(err)
-
-                     return callback(err)
-                 } else {
-
-                     console.log(tickets.length)
-
-                     return callback(tickets);
-
-
-                 }
-
-             })
-
-         }
-
-
-         if (tickettype == 'myticket') {
-
-
-             _tickets.find({"assignee": username ,"tickettype": ['UI','UX','Support','Functionality','Newfeature']},function (err, tickets) {
-                 if (err) {
-                     console.log(err)
-
-                     return callback(err)
-                 } else {
-
-                     console.log(tickets.length)
-
-                     return callback(tickets);
-
-
-                 }
-
-             })
-
-         }
-
-
-         else {
-
-             _tickets.find({'tickettype': tickettype}, function (err, tickets) {
-                 if (err) {
-                     console.log(err)
-
-                     return callback(err)
-                 } else {
-
-                     console.log(tickets.length)
-
-                     return callback(tickets);
-
-
-                 }
-
-             })
-         }
-     }
-
-
-
-exports.singleticket = function (ticketid,callback) {
-
-    _tickets.findOne({'ticketid': ticketid},function (err, ticket) {
+    _tasks.find({'assignee': username}, function (err, tasks) {
         if (err) {
             console.log(err)
 
             return callback(err)
         } else {
 
-            console.log(ticket)
+            console.log(tasks.length)
 
-
-            return callback(ticket);
+            return callback(tasks);
 
 
         }
@@ -110,56 +37,70 @@ exports.singleticket = function (ticketid,callback) {
 
 }
 
-exports.find_ticket_count = function(callback){
-
-         var names = ['Evan','Surajit','Isis','Millie','Sharon','Phoebe','Angel','Serah']
-
-         var ticketcount =[]
-
-         var resultsCount = 0;
 
 
- for (var i=0;i<names.length;i++){
-     _tickets.find({'assignee': names[i]},function (err, tickets) {
+exports.singletask = function (taskid,callback) {
 
-         resultsCount++
+    _tasks.findOne({'taskid': taskid},function (err, task) {
+        if (err) {
+            console.log(err)
 
-         if (err) {
-             console.log(err)
+            return callback(err)
+        } else {
 
-             return callback(err)
-         } else {
-
-             ticketcount.push(tickets.length)
+            console.log(task)
 
 
-             if (resultsCount === names.length) {
-                 return callback(ticketcount);
-                 ticketcount=[]
+            return callback(task);
 
 
-             }
+        }
 
-
-
-
-
-
-
-
-
-
-
-         }
-
-     })
-
- }
-
+    })
 
 }
 
+exports.find_task_count = function(callback) {
+
+    var names = ['Evan', 'Surajit', 'Isis', 'Millie', 'Sharon', 'Phoebe', 'Angel', 'Serah']
+
+    var taskcount = []
+    var resultsCount = 0;
 
 
-    exports.ticket =mongoose.model('tickets', ticketSchema)
+    for (var i = 0; i < names.length; i++) {
+        _tasks.find({'assignee': names[i]}, function (err, tickets) {
+
+            resultsCount++
+
+            if (err) {
+                console.log(err)
+
+                return callback(err)
+            } else {
+                taskcount.push({
+                    key: resultsCount,
+                    value:tickets.length
+
+                })
+
+
+                if (resultsCount === names.length) {
+                    console.log('Taskkkkkkk',taskcount)
+
+                    return callback(taskcount);
+
+
+                }
+
+
+            }
+
+        })
+
+    }
+
+}
+
+exports.task =mongoose.model('tasks', taskSchema)
 

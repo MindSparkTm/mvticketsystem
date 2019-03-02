@@ -381,15 +381,21 @@ router.get('/ticketcount',mid.requiresLogin,function (req,res) {
 })
 
 
-router.get('/taskcount',mid.requiresLogin,function (req,res) {
+router.get('/taskcount',function (req,res) {
 
-    tickets.find_ticket_count(function (response) {
-        console.log('respo',response)
+    tasks.find_task_count(function (response) {
+        console.log('respo',response["1"])
+
+        var name = response["1"]
+        d = name["1"]
+
+        console.log('d',d)
 
 
         names:  ['Evan','Surajit','Isis','Millie','Sharon','Phoebe','Angel','Serah'],
 
-            res.render('test.hbs', {'graph':'Tasks','summary':'Number of Assigned Tasks','topheading':'Task Summary','resp':response})
+            res.render('test.hbs', {'graph':'Tasks','summary':'Number of Assigned Tasks','topheading':'Task Summary','Evan':response['1'],'Surajit':
+            response['2'],'Isis':response['3'],'Millie':response['4'],'Sharon':response['5'],'Phoebe':response['6'],'Angel':response['7'],'Serah':response['8']})
 
     })
 
