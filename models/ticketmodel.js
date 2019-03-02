@@ -135,6 +135,7 @@ exports.find_ticket_count = function(callback){
 
              if (resultsCount === names.length) {
                  return callback(ticketcount);
+                 ticketcount=[]
 
 
              }

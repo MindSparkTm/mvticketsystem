@@ -85,6 +85,7 @@ exports.find_task_count = function(callback) {
 
                 if (resultsCount === names.length) {
                     return callback(taskcount);
+                    taskcount=[]
 
 
                 }
