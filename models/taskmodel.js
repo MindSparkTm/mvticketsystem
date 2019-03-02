@@ -60,6 +60,42 @@ exports.singletask = function (taskid,callback) {
 
 }
 
+exports.find_task_count = function(callback) {
+
+    var names = ['Evan', 'Surajit', 'Isis', 'Millie', 'Sharon', 'Phoebe', 'Angel', 'Serah']
+
+    var taskcount = []
+
+    var resultsCount = 0;
+
+
+    for (var i = 0; i < names.length; i++) {
+        _tasks.find({'assignee': names[i]}, function (err, tickets) {
+
+            resultsCount++
+
+            if (err) {
+                console.log(err)
+
+                return callback(err)
+            } else {
+
+                taskcount.push(tickets.length)
+
+
+                if (resultsCount === names.length) {
+                    return callback(taskcount);
+
+
+                }
+
+
+            }
+
+        })
+
+    }
+}
 
 exports.task =mongoose.model('tasks', taskSchema)
 

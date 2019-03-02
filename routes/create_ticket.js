@@ -366,15 +366,13 @@ router.post('/updatetask',mid.requiresLogin,function (req,res,next) {
 
 })
 
-router.get('/ticketcount',function (req,res) {
+router.get('/ticketcount',mid.requiresLogin,function (req,res) {
 
-    console.log('Entered')
     tickets.find_ticket_count(function (response) {
-        console.log('This is my r',response.length)
 
         names:  ['Evan','Surajit','Isis','Millie','Sharon','Phoebe','Angel','Serah'],
 
-            res.render('test.hbs', {'graph':'Tickets','Evan':response[0],'Surajit':response[1],'Isis':response[2],'Millie':response[3],'Sharon':response[4],'Phoebe':response[5],'Angel':response[6],'Serah':response[7]})
+            res.render('test.hbs', {'graph':'Tickets','topheading':'Ticket Summary','summary':'Number of Assigned Tickets','Evan':response[0],'Surajit':response[1],'Isis':response[2],'Millie':response[3],'Sharon':response[4],'Phoebe':response[5],'Angel':response[6],'Serah':response[7]})
 
 
     })
@@ -382,5 +380,19 @@ router.get('/ticketcount',function (req,res) {
 
 })
 
+
+router.get('/taskcount',mid.requiresLogin,function (req,res) {
+
+    tickets.find_ticket_count(function (response) {
+
+        names:  ['Evan','Surajit','Isis','Millie','Sharon','Phoebe','Angel','Serah'],
+
+            res.render('test.hbs', {'graph':'Tasks','summary':'Number of Assigned Tasks','topheading':'Task Summary','Evan':response[0],'Surajit':response[1],'Isis':response[2],'Millie':response[3],'Sharon':response[4],'Phoebe':response[5],'Angel':response[6],'Serah':response[7]})
+
+
+    })
+
+
+})
 
 module.exports = router;

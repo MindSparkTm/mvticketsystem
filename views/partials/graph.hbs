@@ -14,10 +14,10 @@
             type: 'column'
         },
         title: {
-            text: 'Ticket Summary'
+            text: '{{'topheading'}}',
         },
         subtitle: {
-            text: ''
+            text: '{{'summary'}}',
         },
         xAxis: {
             categories:  ['Evan','Surajit','Isis','Millie','Sharon','Phoebe','Angel','Serah'],
@@ -27,7 +27,7 @@
         yAxis: {
             min: 0,
             title: {
-                text: 'Number of Assinged Tickets'
+                text: '{{'summary'}}',
             }
         },
         tooltip: {
@@ -45,7 +45,7 @@
             }
         },
         series: [{
-            name: 'Ticket Summary',
+            name: '{{'topheading'}}',
             data: [{{'Evan'}}, {{'Surajit'}}, {{'Isis'}}, {{'Millie'}}, {{'Sharon'}}, {{'Phoebe'}}, {{'Angel'}}, {{'Serah'}}]
 
         }]
