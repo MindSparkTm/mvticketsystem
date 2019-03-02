@@ -5,6 +5,8 @@ var User = require('../models/usermodel')
 var tasks = require('../models/taskmodel')
 var cp = require('child_process');
 var sms_worker = cp.fork('./worker');
+var update_worker = cp.fork('./update_task_worker');
+
 
 var uuid = require('uuid');
 var dateTime = require('node-datetime');
@@ -232,10 +234,12 @@ router.get('/taskinfo', function (req, res, next) {
 router.post('/updateticket',mid.requiresLogin,function (req,res,next) {
     title = req.body.title
     description = req.body.description
+    ticketid = req.body.ticketid
 
 
 
     assignee = req.body.assignee
+    creator = req.body.creator
 
     console.log('a',assignee)
     priority = req.body.priority
@@ -244,7 +248,7 @@ router.post('/updateticket',mid.requiresLogin,function (req,res,next) {
 
     status = req.body.status
 
-    console.log(status)
+    console.log('creator',creator)
 
 
 
@@ -263,7 +267,27 @@ router.post('/updateticket',mid.requiresLogin,function (req,res,next) {
                 res.end('{"response": "error"}')
             }
             else {
+                User.singleuser(creator,function (user,err) {
+                    if (err){
+                        console.log(err)
+                    }
+                    else{
+
+                        email = user.email
+                        update_worker.on('message', function(m) {
+                            // Receive results from child process
+
+
+                        });
+
+                        var data = email+"|"+ticketid+"|"+creator+"|"+assignee+"|"+"ticket"
+                        update_worker.send(data);
+                    }
+
+                })
                 res.end('{"response": "success"}')
+
+
             }
 
         });
@@ -279,6 +303,7 @@ router.post('/updateticket',mid.requiresLogin,function (req,res,next) {
 router.post('/updatetask',mid.requiresLogin,function (req,res,next) {
     title = req.body.title
     description = req.body.description
+    taskid = req.body.taskid
 
 
 
@@ -290,6 +315,7 @@ router.post('/updatetask',mid.requiresLogin,function (req,res,next) {
 
     status = req.body.status
 
+    creator = req.body.creator
 
 
 
@@ -308,6 +334,25 @@ router.post('/updatetask',mid.requiresLogin,function (req,res,next) {
                 res.end('{"response": "error"}')
             }
             else {
+                User.singleuser(creator,function (user,err) {
+                    if (err){
+                        console.log(err)
+                    }
+                    else{
+
+                        email = user.email
+                        update_worker.on('message', function(m) {
+                            // Receive results from child process
+
+
+                        });
+
+                        var data = email+"|"+taskid+"|"+creator+"|"+assignee+"|"+"task"
+                        update_worker.send(data);
+                    }
+
+                })
+
                 res.end('{"response": "success"}')
             }
 

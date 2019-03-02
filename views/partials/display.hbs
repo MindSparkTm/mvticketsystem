@@ -134,6 +134,7 @@
         assignee = $('#assignee').val()
         priority = $('#priority').val()
         status = $('#status').val()
+        creator = $('#createdBy').val()
 
         postData = JSON.stringify({
             'ticketid': ticketid,
@@ -141,6 +142,7 @@
             'description': description,
             'assignee': assignee,
             'priority': priority,
+            'creator':creator,
             'status': status
         })
 
@@ -175,6 +177,8 @@
         assignee = $('#assignee').val()
         priority = $('#priority').val()
         status = $('#status').val()
+        creator = $('#createdBy').val()
+
 
         postData = JSON.stringify({
             'taskid': taskid,
@@ -182,6 +186,7 @@
             'description': description,
             'assignee': assignee,
             'priority': priority,
+            'creator':creator,
             'status': status
         })
 
