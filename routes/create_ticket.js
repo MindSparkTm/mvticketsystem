@@ -373,8 +373,7 @@ router.get('/ticketcount',mid.requiresLogin,function (req,res) {
 
         names:  ['Evan','Surajit','Isis','Millie','Sharon','Phoebe','Angel','Serah'],
 
-            res.render('test.hbs', {'graph':'Tickets','topheading':'Ticket Summary','summary':'Number of Assigned Tickets','Evan':response[0],'Surajit':response[1],'Isis':response[2],'Millie':response[3],'Sharon':response[4],'Phoebe':response[5],'Angel':response[6],'Serah':response[7]})
-
+            res.render('test.hbs', {'graph':'Tickets','topheading':'Ticket Summary','summary':'Number of Assigned Tickets','resp':response})
 
     })
 
@@ -390,8 +389,7 @@ router.get('/taskcount',mid.requiresLogin,function (req,res) {
 
         names:  ['Evan','Surajit','Isis','Millie','Sharon','Phoebe','Angel','Serah'],
 
-            res.render('test.hbs', {'graph':'Tasks','summary':'Number of Assigned Tasks','topheading':'Task Summary','Evan':response[0],'Surajit':response[1],'Isis':response[2],'Millie':response[3],'Sharon':response[4],'Phoebe':response[5],'Angel':response[6],'Serah':response[7]})
-
+            res.render('test.hbs', {'graph':'Tasks','summary':'Number of Assigned Tasks','topheading':'Task Summary','resp':response})
 
     })
 
