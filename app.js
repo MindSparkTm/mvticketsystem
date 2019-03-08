@@ -9,6 +9,7 @@ var indexRouter = require('./routes/index');
 var ticketRouter = require('./routes/create_ticket');
 var loginRouter = require('./routes/login');
 var signupRouter = require('./routes/signup');
+var chatRouter = require('./routes/chatserver')
 var session = require('express-session')
 
 var smsRouter = require('./routes/sms');
@@ -41,6 +42,7 @@ app.use('/sms', smsRouter);
 app.use('/tickettype', ticketRouter);
 app.use('/support', loginRouter);
 app.use('/mv', signupRouter);
+app.use('/start-chat', chatRouter);
 
 const port=4000
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
