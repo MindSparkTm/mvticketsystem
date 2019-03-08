@@ -1,21 +1,14 @@
-const express = require('express')
-const app = express()
-
-
-//set the template engine ejs
-app.set('view engine', 'ejs')
-
-//middlewares
-app.use(express.static('public'))
+var express = require('express');
+var router = express.Router();
+var app = express()
 
 
 //routes
-app.get('/', function(req, res){
+router.get('/', function(req, res){
     res.render('index')
 })
 
-//Listen on port 3000
-server = app.listen(3500)
+server = app.listen(4000)
 
 
 
@@ -48,4 +41,7 @@ io.on('connection', function(socket) {
         socket.broadcast.emit('typing', {username : socket.username})
     })
 })
+
+module.exports = router;
+
 

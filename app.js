@@ -9,7 +9,7 @@ var indexRouter = require('./routes/index');
 var ticketRouter = require('./routes/create_ticket');
 var loginRouter = require('./routes/login');
 var signupRouter = require('./routes/signup');
-var chatRouter = require('./routes/chatserver')
+var chatRouter = require('./routes/chatfrontend')
 var session = require('express-session')
 
 var smsRouter = require('./routes/sms');
@@ -42,10 +42,11 @@ app.use('/sms', smsRouter);
 app.use('/tickettype', ticketRouter);
 app.use('/support', loginRouter);
 app.use('/mv', signupRouter);
-app.use('/start-chat', chatRouter);
+app.use('/startchat', chatRouter);
+
 
 const port=4000
-app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+server = app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
 
 
@@ -64,6 +65,37 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+
+
+const io = require("socket.io")(server)
+
+
+//listen on every connection
+io.on('connection', function(socket) {
+  console.log('New user connected')
+
+  //default username
+  socket.username = "Anonymous"
+
+  //listen on change_username
+  socket.on('change_username',function (data) {
+    socket.username = data.username
+
+  })
+
+  //listen on new_message
+  socket.on('new_message', function(data){
+    //broadcast the new message
+    console.log('message',data)
+    io.sockets.emit('new_message', {message : data.message, username : socket.username});
+  })
+
+  //listen on typing
+  socket.on('typing', function(data){
+    socket.broadcast.emit('typing', {username : socket.username})
+  })
+})
 
 
 
