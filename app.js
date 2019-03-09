@@ -46,7 +46,15 @@ app.use('/startchat', chatRouter);
 
 
 const port=4000
-server = app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+// server = app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
+
+http.listen(4000, function () {
+  console.log('Express server listening on port %d in %s mode', 4000);
+});
+
 
 
 
@@ -68,7 +76,6 @@ app.use(function(err, req, res, next) {
 
 
 
-const io = require("socket.io")(server)
 
 
 //listen on every connection

@@ -1,7 +1,7 @@
 
 $(function(){
    	//make connection
-	var socket = io.connect('http://localhost:4000')
+	var socket = io.connect('127.0.0.1:4000')
 
 	//buttons and inputs
 	var message = $("#message")
